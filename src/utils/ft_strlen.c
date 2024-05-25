@@ -1,33 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   header.h                                           :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahanaf <ahanaf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/26 13:20:14 by eouhrich          #+#    #+#             */
-/*   Updated: 2024/05/24 23:00:03 by ahanaf           ###   ########.fr       */
+/*   Created: 2024/05/25 05:40:40 by ahanaf            #+#    #+#             */
+/*   Updated: 2024/05/25 05:47:27 by ahanaf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef HEADER_H
-# define HEADER_H
+#include "philo.h"
 
-# include <stdio.h>
-# include <unistd.h>
-# include <stdlib.h>
-
-typedef struct s_data
+size_t ft_strlen(const char *s)
 {
-	void			*ptr;
-	size_t			size;
-	int				index;
-	char			*description;
-	struct s_data	*next;
-}					t_data;
+    size_t i;
 
-void				recursive_free(t_data *list);
-void				*ft_allocator(size_t size, char *description);
-void				free_allocator(void);
-
-#endif
+    if (!s)
+        return (0);
+    i = 0;
+    while (s[i])
+        i++;
+    return (i);
+}

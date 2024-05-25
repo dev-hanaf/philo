@@ -6,7 +6,7 @@ BLUE = \033[0;34m
 NC = \033[0m
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g3 #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
 NAME = philo
 
 GARBAGE = ./libs/gc
@@ -16,7 +16,7 @@ LIBS = -L$(GARBAGE) -lgarbage
 
 INC = -Ilibs/gc -Iheaders
 
-SRC =  $(wildcard src/*.c) 
+SRC =  $(wildcard src/*.c)  $(wildcard src/*/*.c) 
 OBJ = $(SRC:.c=.o)
 
 all : header $(NAME)
