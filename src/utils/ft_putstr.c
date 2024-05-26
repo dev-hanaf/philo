@@ -1,33 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   header.h                                           :+:      :+:    :+:   */
+/*   ft_putstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahanaf <ahanaf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/26 13:20:14 by eouhrich          #+#    #+#             */
-/*   Updated: 2024/05/10 07:24:52 by ahanaf           ###   ########.fr       */
+/*   Created: 2024/05/25 05:55:54 by ahanaf            #+#    #+#             */
+/*   Updated: 2024/05/25 05:59:00 by ahanaf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef HEADER_H
-# define HEADER_H
+#include "philo.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-
-typedef struct s_data
+void    ft_putchar_fd(char c, int fd)
 {
-	void			*ptr;
-	size_t			size;
-	int				index;
-	char			*description;
-	struct s_data	*next;
-}					t_data;
+    write(fd, &c, 1);
+    return ;
+}
 
-void				recursive_free(t_data *list);
-void				*ft_allocator(size_t size, char *description);
-void				free_allocator(void);
-
-#endif
+void ft_putstr_fd(char *str, int fd)
+{
+    size_t i;
+    
+    if (!str)
+        return ;
+    i = 0;
+    while (str[i])
+        ft_putchar_fd(str[i++], fd);
+    return;
+}
