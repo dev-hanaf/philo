@@ -6,20 +6,20 @@
 /*   By: ahanaf <ahanaf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 05:48:10 by ahanaf            #+#    #+#             */
-/*   Updated: 2024/05/25 07:02:32 by ahanaf           ###   ########.fr       */
+/*   Updated: 2024/05/26 05:16:27 by ahanaf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int check_arguments(int ac, char **av, int **array)
+int check_arguments(int ac, char **av, unsigned long **array)
 {
     int i;
     int j;
-    int result;
+    unsigned long result;
     int sign;
     int is_ok;
-    (void)array;
+
     i = 1;
     while(i < ac)
     {

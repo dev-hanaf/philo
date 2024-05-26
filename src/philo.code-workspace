@@ -7,7 +7,6 @@
 	"settings": {
 		"files.associations": {
 			"philo.h": "c",
-			"header.h": "c",
 			"colors.h": "c",
 			"unistd.h": "c",
 			"pthread.h": "c",

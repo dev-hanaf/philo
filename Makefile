@@ -12,9 +12,8 @@ NAME = philo
 GARBAGE = ./libs/gc
 GNL = libs/get_next_line
 
-LIBS = -L$(GARBAGE) -lgarbage
 
-INC = -Ilibs/gc -Iheaders
+INC = -Iheaders
 
 SRC =  $(wildcard src/*.c)  $(wildcard src/*/*.c) 
 OBJ = $(SRC:.c=.o)
@@ -22,18 +21,15 @@ OBJ = $(SRC:.c=.o)
 all : header $(NAME)
 
 $(NAME) : $(OBJ)
-	@make -C $(GARBAGE)
 	$(CC) $(CFLAGS) $(OBJ) $(LIBS) $(INC) -o $(NAME) 
 
 %.o:%.c
 	$(CC) $(CFLAGS) $(INC)  -c $< -o $@
 
 clean:
-	@make clean -C $(GARBAGE)
 	rm -rf $(OBJ)
 
 fclean: clean
-	@make fclean -C $(GARBAGE)
 	rm -rf $(NAME)
 
 re: fclean all
