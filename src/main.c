@@ -6,32 +6,47 @@
 /*   By: ahanaf <ahanaf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 21:35:28 by ahanaf            #+#    #+#             */
-/*   Updated: 2024/05/26 06:22:08 by ahanaf           ###   ########.fr       */
+/*   Updated: 2024/05/27 06:49:40 by ahanaf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+
+int controller(t_data *data)
+{
+	if (create_philos(data))
+		return (1);
+	
+	return (0);
+}
+
+
 int	initial_data(unsigned long *array, int ac)
 {
-	t_philo	philo;
+	t_data	data;
 	
-	memset(&philo, 0, sizeof(t_philo));
+	memset(&data, 0, sizeof(t_data));
 	if (ac > 5)
 	{
-		philo.n_time_eat = array[4];
+		data.n_time_eat = array[4];
 		if (!array[4])
 		{
 			free(array);
 			return (1);
 		}
 	}	
-	philo.n_philos = array[0];
-	philo.time_to_die = array[1];
-	philo.time_to_eat = array[2];
-	philo.time_to_sleep = array[3];
+	data.n_philos = array[0];
+	data.time_to_die = array[1];
+	data.time_to_eat = array[2];
+	data.time_to_sleep = array[3];
 	free(array);
-	if (create_philos(&philo))
+	if (data.n_philos == 1 || 0 )
+	{
+		printf("should be at least 2 philosofres\n");
+		return (1);
+	}
+	if (controller(&data))
 		return (1);
 	return (0);
 }

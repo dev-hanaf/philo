@@ -1,31 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_sleep.c                                         :+:      :+:    :+:   */
+/*   join_threads.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahanaf <ahanaf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/26 06:50:39 by ahanaf            #+#    #+#             */
-/*   Updated: 2024/05/26 11:27:14 by ahanaf           ###   ########.fr       */
+/*   Created: 2024/05/27 06:37:56 by ahanaf            #+#    #+#             */
+/*   Updated: 2024/05/27 07:01:01 by ahanaf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-size_t	get_time(void)
+int	join_threads(t_data *data)
 {
-	struct timeval	tv;
-	size_t			time;
+	unsigned long	i;
 
-	gettimeofday(&tv, NULL);
-	time = tv.tv_sec * 1000 + tv.tv_usec / 1000;
-	return (time);
-}
-
-void	ft_sleep(int time)
-{
-	size_t	expected;
-
-	expected = get_time() + time;
-	while (get_time() < expected);
+	i = 0;
+	while (i < data->n_philos)
+	{
+		if (pthread_join(data->philos[i].new_thread, NULL))
+            return (1);
+		i++;
+	}
+    return (0);
 }
