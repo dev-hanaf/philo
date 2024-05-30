@@ -1,36 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   getters_setters.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahanaf <ahanaf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/23 21:35:28 by ahanaf            #+#    #+#             */
-/*   Updated: 2024/05/30 08:06:34 by ahanaf           ###   ########.fr       */
+/*   Created: 2024/05/30 09:57:52 by ahanaf            #+#    #+#             */
+/*   Updated: 2024/05/30 10:33:26 by ahanaf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	main(int ac, char **av)
+void    set_bool(t_data *data, int *dest,int value)
 {
-	unsigned long	*array;
+    pthread_mutex_lock(&data->mutex);
+    *dest = value;
+    pthread_mutex_unlock(&data->mutex);
+}
 
-	if (ac < 5 || ac > 6)
-	{
-		ft_putstr_fd("Error: Wrong number of arguments\n", 2);
-		return (1);
-	}
-	array = malloc((ac - 1) * sizeof(unsigned long));
-	if (!array)
-		return (1);
-	if (check_arguments(ac, av, &array))
-	{
-		// TODO if i need to exit when arg bigger than INT_MAX
-		free(array);
-		return (1);
-	}
-	if (initial_data(array, ac))
-		return (1);
-	return (0);
+int    get_bool(t_data *data, int value)
+{
+    int ret;
+    
+    pthread_mutex_lock(&data->mutex);
+    ret = value;
+    pthread_mutex_unlock(&data->mutex);
+    return (ret);
+}
+
+int simulation_finished(t_data *data)
+{
+    return (get_bool(data, data->end_simulation));
 }

@@ -1,36 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahanaf <ahanaf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/23 21:35:28 by ahanaf            #+#    #+#             */
-/*   Updated: 2024/05/30 08:06:34 by ahanaf           ###   ########.fr       */
+/*   Created: 2024/05/30 09:52:23 by ahanaf            #+#    #+#             */
+/*   Updated: 2024/05/30 10:24:37 by ahanaf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	main(int ac, char **av)
+void	*routine(void *data)
 {
-	unsigned long	*array;
+	t_philo *philo;
 
-	if (ac < 5 || ac > 6)
-	{
-		ft_putstr_fd("Error: Wrong number of arguments\n", 2);
-		return (1);
-	}
-	array = malloc((ac - 1) * sizeof(unsigned long));
-	if (!array)
-		return (1);
-	if (check_arguments(ac, av, &array))
-	{
-		// TODO if i need to exit when arg bigger than INT_MAX
-		free(array);
-		return (1);
-	}
-	if (initial_data(array, ac))
-		return (1);
-	return (0);
+	philo = (t_philo *)data;
+	// while (!get_bool(philo->data))
+		// ;
+	printf("%ld\n", philo->id);
+
+	return (NULL);
 }
