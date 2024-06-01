@@ -6,7 +6,7 @@
 /*   By: ahanaf <ahanaf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 08:30:33 by ahanaf            #+#    #+#             */
-/*   Updated: 2024/05/30 09:25:48 by ahanaf           ###   ########.fr       */
+/*   Updated: 2024/06/01 15:32:47 by ahanaf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,8 @@ int assign_forks(t_data *data)
     i = 0;
     while (i < data->n_philos)
     {
-        if (pthread_mutex_init(&data->forks[i].fork, NULL))
+        if (pthread_mutex_init(&data->forks[i], NULL))
             return (1);
-        data->forks[i].fork_id = i;//for debug
         i++;
     }
     return (0);
@@ -37,12 +36,12 @@ if (odd) first_left;
 elif (even) first_right;
  */
 
-void    philo_takes_fork(t_philo *philo, t_fork *forks, unsigned long pos)
+void    philo_takes_fork(t_philo *philo, pthread_mutex_t *forks, unsigned long pos)
 {
     unsigned long philo_nbr;
 
     philo_nbr = philo->data->n_philos;
-    if (philo->id % 2) // odd
+    if (pos % 2) // odd
     {
         philo->right_fork = &forks[pos];
         philo->left_fork = &forks[(pos + 1) % philo_nbr];

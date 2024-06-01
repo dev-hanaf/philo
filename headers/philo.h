@@ -6,7 +6,7 @@
 /*   By: ahanaf <ahanaf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 19:01:32 by ahanaf            #+#    #+#             */
-/*   Updated: 2024/05/30 10:34:01 by ahanaf           ###   ########.fr       */
+/*   Updated: 2024/06/01 15:56:25 by ahanaf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,6 @@ enum				e_bool
 	TRUE
 };
 
-/*--------------------------- FORKS ----------------------------*/
-typedef struct s_fork
-{
-	pthread_mutex_t	fork;
-	unsigned long	fork_id;
-}					t_fork;
-
 /*--------------------------- DATA ----------------------------*/
 typedef struct s_data
 {
@@ -52,8 +45,9 @@ typedef struct s_data
     int end_simulation; // TRUE --> a philo dies or all philos full
     size_t			start_time;
 	struct s_philo	*philos;
-	t_fork			*forks;
+	pthread_mutex_t			*forks;
 	pthread_mutex_t	mutex;
+	pthread_mutex_t	write_mutex;
 	int				all_thread_ready;
 }					t_data;
 
@@ -66,8 +60,8 @@ typedef struct s_philo
 	size_t          last_meal_time; // time passed from last meal
 	int             full;              // TRUE --> philo ates all he's meals
 	unsigned long	id;
-	t_fork			*right_fork;
-	t_fork			*left_fork;
+	pthread_mutex_t			*right_fork;
+	pthread_mutex_t			*left_fork;
 	t_data			*data;
 }					t_philo;
 
@@ -89,7 +83,7 @@ int					initial_data(unsigned long *array, int ac);
 /*--------------------------- Routine ----------------------------*/
 int					initializer(t_data *data);
 int 				assign_forks(t_data *data);
-void    			philo_takes_fork(t_philo *philo, t_fork *forks, unsigned long pos);
+void    			philo_takes_fork(t_philo *philo, pthread_mutex_t  *forks, unsigned long pos);
 int 				create_philos(t_data *data);
 int					join_threads(t_data *data);
 void 				*routine(void *data);
@@ -97,6 +91,9 @@ void    			set_bool(t_data *data, int *dest,int value);
 int   				get_bool(t_data *data, int value);
 int 				simulation_finished(t_data *data);
 
+void    			time_sitter(t_data *data, unsigned long  *dest,unsigned long  value);
+// int    time_getter(t_data *data, int value);
+void *monitor(void *data);
 
 
 #endif

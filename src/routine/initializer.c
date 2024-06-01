@@ -6,7 +6,7 @@
 /*   By: ahanaf <ahanaf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 05:06:11 by ahanaf            #+#    #+#             */
-/*   Updated: 2024/05/30 10:40:37 by ahanaf           ###   ########.fr       */
+/*   Updated: 2024/06/01 15:37:22 by ahanaf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,11 @@ int assign_data_to_philo(t_data *data)
     i = 0;
     while (i < data->n_philos)
     {
-        data->philos->id = i + 1;
         data->philos[i].id = i + 1;
         data->philos[i].full = FALSE;
         data->philos[i].meal_counter = 0;
         data->philos[i].data = data;
-        philo_takes_fork(data->philos, data->forks, i);
+        philo_takes_fork(&data->philos[i], data->forks, i);
         i++;
     }
     return (0);
@@ -34,7 +33,7 @@ int initializer(t_data *data)
     data->philos = malloc(sizeof(t_philo) * data->n_philos);
     if (!data->philos)
         return (1);
-    data->forks = malloc(sizeof(t_fork) * data->n_philos);
+    data->forks = malloc(sizeof(pthread_mutex_t) * data->n_philos);
     if (!data->forks)
         return (1);
     if (assign_forks(data))
@@ -43,7 +42,9 @@ int initializer(t_data *data)
         return (1);
     if (pthread_mutex_init(&data->mutex, NULL))
         return (1);
-    if (create_philos(data))// TODO
+    if (create_philos(data))
+        return (1);
+    if (pthread_mutex_destroy(&data->mutex))
         return (1);
     return (0);
 }
