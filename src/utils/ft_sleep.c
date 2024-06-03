@@ -6,7 +6,7 @@
 /*   By: ahanaf <ahanaf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 06:50:39 by ahanaf            #+#    #+#             */
-/*   Updated: 2024/05/26 11:27:14 by ahanaf           ###   ########.fr       */
+/*   Updated: 2024/06/02 15:26:15 by ahanaf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,12 @@ size_t	get_time(void)
 	return (time);
 }
 
-void	ft_sleep(int time)
+void	ft_sleep(unsigned long time)
 {
 	size_t	expected;
 
 	expected = get_time() + time;
-	while (get_time() < expected);
+	
+	while (get_time() < expected)
+		usleep(10);
 }

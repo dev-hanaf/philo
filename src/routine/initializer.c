@@ -6,7 +6,7 @@
 /*   By: ahanaf <ahanaf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 05:06:11 by ahanaf            #+#    #+#             */
-/*   Updated: 2024/06/01 15:37:22 by ahanaf           ###   ########.fr       */
+/*   Updated: 2024/06/02 15:15:14 by ahanaf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,30 +42,11 @@ int initializer(t_data *data)
         return (1);
     if (pthread_mutex_init(&data->mutex, NULL))
         return (1);
+    if (pthread_mutex_init(&data->write_mutex, NULL))
+        return (1);
     if (create_philos(data))
         return (1);
     if (pthread_mutex_destroy(&data->mutex))
         return (1);
     return (0);
 }
-
-
-
-
-
-
-
-
-
-
-// int is_thinkig(t_data *data)
-// {
-//     static int i = 1;
-
-//     pthread_mutex_lock(data->philos);
-//     printf("philo |%d| is sleeping 🤔😴\n", i);
-//     i++;
-//      pthread_mutex_unlock(data->philos);// TODO learn how to lock and unlock
-//     ft_sleep(data->time_to_sleep);
-//     return (0);
-// }

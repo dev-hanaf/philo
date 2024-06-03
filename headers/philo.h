@@ -6,7 +6,7 @@
 /*   By: ahanaf <ahanaf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 19:01:32 by ahanaf            #+#    #+#             */
-/*   Updated: 2024/06/01 15:56:25 by ahanaf           ###   ########.fr       */
+/*   Updated: 2024/06/02 14:09:54 by ahanaf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,20 +42,19 @@ typedef struct s_data
 	unsigned long	time_to_eat;
 	unsigned long	time_to_sleep;
 	unsigned long	n_limit_meals;
-    int end_simulation; // TRUE --> a philo dies or all philos full
+    int 			end_simulation; // TRUE --> a philo dies or all philos full
     size_t			start_time;
 	struct s_philo	*philos;
-	pthread_mutex_t			*forks;
+	pthread_mutex_t	*forks;
 	pthread_mutex_t	mutex;
 	pthread_mutex_t	write_mutex;
-	int				all_thread_ready;
 }					t_data;
 
 /*--------------------------- PHILO ----------------------------*/
 typedef struct s_philo
 {
 	pthread_t       new_thread; // a philo is a thread
-	unsigned long	times_ate;
+	// unsigned long	times_ate;
 	unsigned long	meal_counter;
 	size_t          last_meal_time; // time passed from last meal
 	int             full;              // TRUE --> philo ates all he's meals
