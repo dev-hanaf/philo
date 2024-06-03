@@ -6,7 +6,7 @@
 /*   By: ahanaf <ahanaf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 15:49:58 by ahanaf            #+#    #+#             */
-/*   Updated: 2024/06/02 14:58:20 by ahanaf           ###   ########.fr       */
+/*   Updated: 2024/06/03 12:00:59 by ahanaf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,15 @@ void *monitor(void *arg)
         i = 0;
         while (i < data->n_philos)
         {
+        //
             if (get_time() - data->philos[i].last_meal_time >= data->time_to_die)
             {
-                printf("%ld\t\t%ld\t\tdied\n", get_time() - data->start_time, data->philos[i].id);
                 set_bool(data, &data->end_simulation, TRUE);
-                break;
+                pthread_mutex_lock(&data->write_mutex);
+                printf(RED"%ld\t\t %ld\t\t died\n"NC, get_time() - data->start_time, data->philos[i].id);
+                pthread_mutex_unlock(&data->write_mutex); 
+                //TODO et a var in philo struct to check if fork is locked or not
+                return (NULL);
             }
             if ((int)data->n_limit_meals != -1)
             {
@@ -50,8 +54,6 @@ void *monitor(void *arg)
             }
             i++;
         }    
-        
     }
-
     return (NULL);
 }

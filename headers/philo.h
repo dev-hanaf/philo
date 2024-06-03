@@ -6,7 +6,7 @@
 /*   By: ahanaf <ahanaf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 19:01:32 by ahanaf            #+#    #+#             */
-/*   Updated: 2024/06/02 14:09:54 by ahanaf           ###   ########.fr       */
+/*   Updated: 2024/06/03 12:01:41 by ahanaf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_data
 	unsigned long	n_limit_meals;
     int 			end_simulation; // TRUE --> a philo dies or all philos full
     size_t			start_time;
+	int				is_dead;
 	struct s_philo	*philos;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	mutex;
@@ -61,6 +62,7 @@ typedef struct s_philo
 	unsigned long	id;
 	pthread_mutex_t			*right_fork;
 	pthread_mutex_t			*left_fork;
+	//TODO new mutex_t philo_mutex
 	t_data			*data;
 }					t_philo;
 

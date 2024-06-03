@@ -6,7 +6,7 @@
 /*   By: ahanaf <ahanaf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 05:06:11 by ahanaf            #+#    #+#             */
-/*   Updated: 2024/06/02 15:15:14 by ahanaf           ###   ########.fr       */
+/*   Updated: 2024/06/03 11:35:41 by ahanaf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ int initializer(t_data *data)
     if (create_philos(data))
         return (1);
     if (pthread_mutex_destroy(&data->mutex))
+        return (1);
+    if (pthread_mutex_destroy(&data->write_mutex))
         return (1);
     return (0);
 }

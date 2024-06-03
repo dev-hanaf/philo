@@ -6,7 +6,7 @@
 /*   By: ahanaf <ahanaf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 09:52:23 by ahanaf            #+#    #+#             */
-/*   Updated: 2024/06/02 15:30:26 by ahanaf           ###   ########.fr       */
+/*   Updated: 2024/06/03 11:51:36 by ahanaf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,12 @@
 
 void message(t_philo *philo, const char *s)
 {
-	if (simulation_finished(philo->data))
-		return;
 	pthread_mutex_lock(&philo->data->write_mutex);
+	if (simulation_finished(philo->data))
+	{
+		pthread_mutex_unlock(&philo->data->write_mutex);
+		return;
+	}
 	printf("%ld\t\t %ld\t\t %s\n", get_time() - philo->data->start_time, philo->id, s);
 	pthread_mutex_unlock(&philo->data->write_mutex);
 }
@@ -36,6 +39,7 @@ int eat(t_philo *philo)
 	pthread_mutex_lock(philo->left_fork);
 	message(philo, " has taken a left fork");
 	//TODO pthraead_mutex!!
+	
 	time_sitter(philo->data, &philo->last_meal_time , get_time());
 	message(philo, GREEN"is eating"NC);
 	philo->meal_counter++;
@@ -72,6 +76,7 @@ void	*routine(void *data)
 	philo = (t_philo *)data;
 	while (!simulation_finished(philo->data))
 	{
+		printf(ON_CYAN"simulation finished %d\n"NC, simulation_finished(philo->data));
 		if (eat(philo))
 			break;
 		if (_sleep(philo))
