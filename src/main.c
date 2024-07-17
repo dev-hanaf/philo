@@ -6,7 +6,7 @@
 /*   By: ahanaf <ahanaf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 21:35:28 by ahanaf            #+#    #+#             */
-/*   Updated: 2024/05/30 08:06:34 by ahanaf           ###   ########.fr       */
+/*   Updated: 2024/07/15 16:16:18 by ahanaf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	main(int ac, char **av)
 		return (1);
 	if (check_arguments(ac, av, &array))
 	{
-		// TODO if i need to exit when arg bigger than INT_MAX
 		free(array);
 		return (1);
 	}

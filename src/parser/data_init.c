@@ -6,7 +6,7 @@
 /*   By: ahanaf <ahanaf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 08:06:26 by ahanaf            #+#    #+#             */
-/*   Updated: 2024/06/02 15:17:58 by ahanaf           ###   ########.fr       */
+/*   Updated: 2024/07/16 09:51:00 by ahanaf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,19 +35,14 @@ int	controller(t_data *data)
 int	initial_data(unsigned long *array, int ac)
 {
 	t_data	data;
-
+	
 	memset(&data, 0, sizeof(t_data));
 	if (ac > 5)
 	{
 		data.n_limit_meals = array[4];
-		// if (!array[4])
-		// {
-		// 	free(array);
-		// 	return (1);
-		// }
 	}
 	else 
-		data.n_limit_meals = -1;
+		data.meals_arg_exist = TRUE;
 	data.n_philos = array[0];
 	data.time_to_die = array[1];
 	data.time_to_eat = array[2];
@@ -58,7 +53,10 @@ int	initial_data(unsigned long *array, int ac)
 		printf("should be at least 1 philosofres\n");
 		return (1);
 	}
-	if (controller(&data))
+	if (data.n_philos == 1)
+		return (1);
+	// 	//TODO fix that
+	if(controller(&data))
 		return (1);
 	return (0);
 }

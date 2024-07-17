@@ -6,49 +6,98 @@
 /*   By: ahanaf <ahanaf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 05:06:11 by ahanaf            #+#    #+#             */
-/*   Updated: 2024/06/03 11:35:41 by ahanaf           ###   ########.fr       */
+/*   Updated: 2024/07/17 12:12:33 by ahanaf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int assign_data_to_philo(t_data *data)
+void grab_forks(t_data *data, t_philo *philo, unsigned long i)
+{
+    unsigned long nbr_philos;
+    
+    nbr_philos = data->n_philos;
+    if (philo->id % 2 == 0)//even
+    {
+        // printf("philo[%zu] takes right fork %zu\n", philo->id, i);
+        philo->right_fork = &data->forks[i];
+        philo->left_fork = &data->forks[(i + 1) % nbr_philos];
+        // printf("philo[%zu] takes left fork %zu\n", philo->id, (i + 1) % nbr_philos);
+
+    }
+    else
+    {
+        // printf("philo[%zu] takes right fork %zu\n", philo->id, i);
+        philo->right_fork = &data->forks[(i + 1) % nbr_philos];
+        philo->left_fork = &data->forks[i];
+        // printf("philo[%zu] takes left fork %zu\n", philo->id, (i + 1) % nbr_philos);
+    }
+}
+
+int join_threads(t_data *data)
+{
+    unsigned long i;
+
+    i = 0;
+    while (i < data->n_philos)
+    {
+        if (pthread_join(data->philos[i].thread_id, NULL))
+            return (1);
+        i++;
+    }
+    return (0);
+} 
+
+int create_threads(t_data *data)
+{
+    unsigned long i;
+
+    i = 0;
+    while (i < data->n_philos)
+    {
+        if (pthread_create(&data->philos[i].thread_id, NULL, routine, &data->philos[i]))
+            return (1);
+        i++;
+    }
+    if (join_threads(data))
+        return (1);
+    return (0);
+}
+
+int initializer(t_data *data)
 {
     unsigned long i;
     
     i = 0;
-    while (i < data->n_philos)
-    {
-        data->philos[i].id = i + 1;
-        data->philos[i].full = FALSE;
-        data->philos[i].meal_counter = 0;
-        data->philos[i].data = data;
-        philo_takes_fork(&data->philos[i], data->forks, i);
-        i++;
-    }
-    return (0);
-}
-int initializer(t_data *data)
-{
+    data->start_time = get_time();
+    data->end_simulation = FALSE;
     data->philos = malloc(sizeof(t_philo) * data->n_philos);
     if (!data->philos)
         return (1);
     data->forks = malloc(sizeof(pthread_mutex_t) * data->n_philos);
     if (!data->forks)
-        return (1);
-    if (assign_forks(data))
-        return (1);
-    if (assign_data_to_philo(data))
-        return (1);
-    if (pthread_mutex_init(&data->mutex, NULL))
+        return (1); 
+    while(i < data->n_philos)
+    {
+        data->philos[i].id = i + 1;
+        data->thread_running_nbr = 0;
+        data->philos[i].full = 0;
+        data->philos[i].data = data;
+        data->philos[i].last_meal_time = get_time();
+        if (pthread_mutex_init(&data->philos[i].philo_mutex, NULL))
+            return (1);
+        if (pthread_mutex_init(&data->forks[i], NULL))
+            return (1);
+        grab_forks(data, &data->philos[i], i);
+        i++;
+    }
+    if (pthread_mutex_init(&data->data_mutex, NULL))
         return (1);
     if (pthread_mutex_init(&data->write_mutex, NULL))
         return (1);
-    if (create_philos(data))
+    if (pthread_create(&data->monitor_th, NULL, monitor, data))
         return (1);
-    if (pthread_mutex_destroy(&data->mutex))
-        return (1);
-    if (pthread_mutex_destroy(&data->write_mutex))
+    if (create_threads(data))
         return (1);
     return (0);
 }
