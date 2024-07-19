@@ -6,7 +6,7 @@
 /*   By: ahanaf <ahanaf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 05:06:11 by ahanaf            #+#    #+#             */
-/*   Updated: 2024/07/17 12:12:33 by ahanaf           ###   ########.fr       */
+/*   Updated: 2024/07/19 17:28:50 by ahanaf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ int create_threads(t_data *data)
     }
     if (join_threads(data))
         return (1);
+    if (pthread_join(data->monitor_th, NULL))
+        return (1);
     return (0);
 }
 
@@ -81,7 +83,7 @@ int initializer(t_data *data)
     {
         data->philos[i].id = i + 1;
         data->thread_running_nbr = 0;
-        data->philos[i].full = 0;
+        data->philos[i].full = FALSE;
         data->philos[i].data = data;
         data->philos[i].last_meal_time = get_time();
         if (pthread_mutex_init(&data->philos[i].philo_mutex, NULL))
@@ -99,5 +101,10 @@ int initializer(t_data *data)
         return (1);
     if (create_threads(data))
         return (1);
+    //because also the monitor whaits for the variable end simulation.
+    //so  if all start simualtion ends stop the monitor
+    LOCK(&data->data_mutex);
+    data->end_simulation = TRUE;
+    UNLOCK(&data->data_mutex);
     return (0);
 }

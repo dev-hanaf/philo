@@ -6,7 +6,7 @@
 /*   By: ahanaf <ahanaf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 19:35:51 by ahanaf            #+#    #+#             */
-/*   Updated: 2024/07/17 14:42:22 by ahanaf           ###   ########.fr       */
+/*   Updated: 2024/07/19 18:24:39 by ahanaf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ void eat(t_philo *philo)
    philo->last_meal_time = get_time();
    UNLOCK(&philo->philo_mutex);
 
-    philo->meal_counter++;
 
-   write_status(philo, EATING);
+    write_status(philo, EATING);
+    philo->meal_counter++;
 
     ft_sleep(philo->data->time_to_eat);
 
@@ -76,7 +76,7 @@ int all_threads_running(t_data *data)
 void *routine(void *arg)
 {
     t_philo *philo;
-    int end = FALSE;
+    int end;
 
     philo = (t_philo *)arg;
 
@@ -96,7 +96,7 @@ void *routine(void *arg)
         end = philo->data->end_simulation;
         UNLOCK(&philo->data->data_mutex);   
         LOCK(&philo->philo_mutex);
-        if (philo->full)
+        if (philo->full == TRUE)
         {
             UNLOCK(&philo->philo_mutex);
             break;

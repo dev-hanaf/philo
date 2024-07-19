@@ -6,7 +6,7 @@
 /*   By: ahanaf <ahanaf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 19:01:32 by ahanaf            #+#    #+#             */
-/*   Updated: 2024/07/17 11:52:17 by ahanaf           ###   ########.fr       */
+/*   Updated: 2024/07/19 18:01:14 by ahanaf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,8 @@ void *routine(void *arg);
 
 
 /* FUNCTIONS */
+void   increase_threads(t_data *data)
+;
 void   increase_threads(t_data *data);
 int all_threads_running(t_data *data);
 void *monitor(void *arg);

@@ -6,12 +6,31 @@
 /*   By: ahanaf <ahanaf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 10:51:18 by ahanaf            #+#    #+#             */
-/*   Updated: 2024/07/17 14:51:52 by ahanaf           ###   ########.fr       */
+/*   Updated: 2024/07/20 00:24:35 by ahanaf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <philo.h>
 
+int is_full(t_data *data)
+{
+    unsigned long i;
+    // unsigned long counter = 0;
+    i =  0;
+    
+    while (i < data->n_philos)
+    {
+        LOCK(&data->philos[i].philo_mutex);
+        if (data->philos[i].full == FALSE)
+        {
+            UNLOCK(&data->philos[i].philo_mutex);
+            return (FALSE);
+        }
+        UNLOCK(&data->philos[i].philo_mutex);
+        i++;
+    }
+    return (TRUE);
+}
 
 int philo_died(t_philo *philo)
 {
@@ -58,12 +77,20 @@ void *monitor(void *arg)
         i = 0;
         if (i < data->n_philos &&  !end)
         {
+            if (is_full(data))
+            {
+               LOCK(&data->data_mutex);
+                data->end_simulation = TRUE;
+                UNLOCK(&data->data_mutex);
+                break;       
+            }
             if (philo_died(&data->philos[i]))
             {
                 LOCK(&data->data_mutex);
                 data->end_simulation = TRUE;
                 UNLOCK(&data->data_mutex);
                 write_status(&data->philos[i], DIED);
+                break;
             }
             i++;
         }        
