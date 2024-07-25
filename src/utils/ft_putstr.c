@@ -12,20 +12,20 @@
 
 #include "philo.h"
 
-void    ft_putchar_fd(char c, int fd)
+void	ft_putchar_fd(char c, int fd)
 {
-    write(fd, &c, 1);
-    return ;
+	write(fd, &c, 1);
+	return ;
 }
 
-void ft_putstr_fd(char *str, int fd)
+void	ft_putstr_fd(char *str, int fd)
 {
-    size_t i;
-    
-    if (!str)
-        return ;
-    i = 0;
-    while (str[i])
-        ft_putchar_fd(str[i++], fd);
-    return;
+	size_t	i;
+
+	if (!str)
+		return ;
+	i = 0;
+	while (str[i])
+		ft_putchar_fd(str[i++], fd);
+	return ;
 }

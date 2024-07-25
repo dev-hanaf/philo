@@ -6,7 +6,7 @@
 /*   By: ahanaf <ahanaf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 07:48:59 by ahanaf            #+#    #+#             */
-/*   Updated: 2024/07/12 04:05:12 by ahanaf           ###   ########.fr       */
+/*   Updated: 2024/07/21 14:50:28 by ahanaf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ int	check_arguments(int ac, char **av, unsigned long **array)
 		{
 			var->is_ok = 1;
 			var->result = var->result * 10 + (av[var->i][var->j] - 48);
+			if (var->result > INT_MAX)
+				return (1);
 			var->j++;
 		}
 		if (is_error(av))

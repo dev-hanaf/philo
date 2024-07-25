@@ -24,7 +24,7 @@
 # define WHITE "\033[38;5;7m"
 # define NC "\033[0;0;0m"
 
-//Background
+// Background
 # define ON_BLACK "\033[48;5;0m"
 # define ON_RED "\033[48;5;1m"
 # define ON_GREEN "\033[48;5;2m"
