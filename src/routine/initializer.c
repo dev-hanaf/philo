@@ -12,9 +12,9 @@
 
 #include "philo.h"
 
-int init_forks(t_data *data)
+int	init_forks(t_data *data)
 {
-	unsigned long i;
+	unsigned long	i;
 
 	i = 0;
 	while (i < data->n_philos)
@@ -32,9 +32,9 @@ int init_forks(t_data *data)
 	return (0);
 }
 
-int init_philos(t_data *data)
+int	init_philos(t_data *data)
 {
-	unsigned long i;
+	unsigned long	i;
 
 	i = 0;
 	while (i < data->n_philos)
@@ -48,7 +48,8 @@ int init_philos(t_data *data)
 		data->philos[i].second_fork = &data->forks[(i + 1) % (data->n_philos)];
 		if (data->n_philos - 1 == i)
 		{
-			data->philos[i].first_fork = &data->forks[(i + 1) % (data->n_philos)];
+			data->philos[i].first_fork = &data->forks[(i + 1)
+				% (data->n_philos)];
 			data->philos[i].second_fork = &data->forks[i];
 		}
 		i++;
@@ -56,15 +57,16 @@ int init_philos(t_data *data)
 	return (0);
 }
 
-int create_theads(t_data *data)
+int	create_theads(t_data *data)
 {
-	unsigned long i;
+	unsigned long	i;
 
 	i = 0;
 	data->start_time = get_time();
 	while (i < data->n_philos)
 	{
-		if (pthread_create(&data->philos[i].thread_id, NULL, &routine, &data->philos[i]))
+		if (pthread_create(&data->philos[i].thread_id, NULL, &routine,
+				&data->philos[i]))
 			return (1);
 		i++;
 	}
@@ -94,6 +96,5 @@ int	initializer(t_data *data)
 		return (1);
 	if (create_theads(data))
 		return (1);
-	
 	return (0);
 }

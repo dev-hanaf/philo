@@ -6,7 +6,7 @@
 /*   By: ahanaf <ahanaf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 19:01:32 by ahanaf            #+#    #+#             */
-/*   Updated: 2024/07/28 04:02:51 by ahanaf           ###   ########.fr       */
+/*   Updated: 2024/07/28 04:21:52 by ahanaf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,12 @@
 # include "utils.h"
 # include <limits.h>
 # include <pthread.h>
+# include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
 # include <sys/time.h>
 # include <unistd.h>
-# include "utils.h"
-# include <stdbool.h>
 
 # define LOCK pthread_mutex_lock
 # define UNLOCK pthread_mutex_unlock
@@ -42,7 +41,7 @@ typedef struct s_data
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	data_mutex;
 	pthread_mutex_t	dead_mutex;
-	pthread_mutex_t full_mutex;
+	pthread_mutex_t	full_mutex;
 	struct s_philo	*philos;
 }					t_data;
 
@@ -78,7 +77,10 @@ int					initial_data(unsigned long *array, int ac);
 void				*routine(void *arg);
 void				ft_sleep(unsigned long time);
 size_t				get_time(void);
-int 				monitor(t_data *data);
-int				 	write_status(t_philo *philo, char *str);
+int					monitor(t_data *data);
+int					write_status(t_philo *philo, char *str);
+int					write_philo_info(t_philo *philo);
+
+/* FUNCTIONS */
 
 #endif
