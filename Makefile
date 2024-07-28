@@ -6,12 +6,9 @@ BLUE = \033[0;34m
 NC = \033[0m
 
 CC = cc
-#CFLAGS = -Wall -Wextra -Werror #-fsanitize=address
-CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=thread #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror #-fsanitize=address
+#CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=thread #-fsanitize=address
 NAME = philo
-
-GARBAGE = ./libs/gc
-GNL = libs/get_next_line
 
 
 INC = -Iheaders
