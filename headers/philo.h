@@ -6,7 +6,7 @@
 /*   By: ahanaf <ahanaf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 19:01:32 by ahanaf            #+#    #+#             */
-/*   Updated: 2024/07/28 04:21:52 by ahanaf           ###   ########.fr       */
+/*   Updated: 2024/07/29 08:13:57 by ahanaf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,17 @@
 # define LOCK pthread_mutex_lock
 # define UNLOCK pthread_mutex_unlock
 # define MUTEX_INIT pthread_mutex_init
+# define MUTEX_DEST pthread_mutex_destroy
+
+typedef enum e_status
+{
+	ALL,
+	FORKS,
+	DATA,
+	DEAD,
+	FULL
+}	t_status;
+
 /*--------------------------- DATA ----------------------------*/
 typedef struct s_data
 {
@@ -80,7 +91,5 @@ size_t				get_time(void);
 int					monitor(t_data *data);
 int					write_status(t_philo *philo, char *str);
 int					write_philo_info(t_philo *philo);
-
-/* FUNCTIONS */
 
 #endif
